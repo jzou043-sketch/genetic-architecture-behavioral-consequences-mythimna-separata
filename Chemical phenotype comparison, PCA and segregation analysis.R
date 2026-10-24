@@ -507,184 +507,310 @@ cat(
 # ============================================================
 # Part 6. Chi-square goodness-of-fit test
 # ============================================================
+# ============================================================
+# Chi-square goodness-of-fit tests
+# Mythimna separata crossing data
+# Column order: AE, A, E, N
+# ============================================================
 
-segregation_data <- data.frame(
-  Population = c(
-    rep("Parent", 2),
-    rep("F2", 2),
-    rep("Backcross", 8)
-  ),
-  
-  Female = c(
-    "AA", "EE",
-    "AE", "EA",
-    "EE", "EE",
-    "EA", "EA",
-    "AA", "AA",
-    "AE", "AE"
-  ),
-  
-  Male = c(
-    "AA", "EE",
-    "AE", "EA",
-    "AE", "EA",
-    "AA", "EE",
-    "AE", "EA",
-    "AA", "EE"
-  ),
-  
-  AE = c(
-    0, 0,
-    274, 253,
-    53, 50,
-    41, 58,
-    28, 58,
-    57, 40
-  ),
-  
-  A = c(
-    45, 0,
-    91, 87,
-    0, 0,
-    59, 0,
-    48, 52,
-    45, 0
-  ),
-  
-  E = c(
-    0, 51,
-    101, 105,
-    48, 46,
-    0, 39,
-    0, 0,
-    0, 58
-  ),
-  
-  Null = c(
-    0, 0,
-    35, 40,
-    0, 0,
-    0, 0,
-    0, 0,
-    0, 0
-  ),
-  
-  Expected_ratio = c(
-    "0:1:0:0",
-    "0:0:1:0",
-    "9:3:3:1",
-    "9:3:3:1",
-    "1:0:1:0",
-    "1:0:1:0",
-    "1:1:0:0",
-    "1:0:1:0",
-    "1:1:0:0",
-    "1:1:0:0",
-    "1:1:0:0",
-    "1:0:1:0"
-  ),
-  
-  stringsAsFactors = FALSE
+
+# -------------------------
+# 1. F2: AE × AE
+# Observed = 274, 91, 101, 35
+# Expected ratio = 9:3:3:1
+# -------------------------
+
+F2_AE <- c(
+  AE = 274,
+  A  = 91,
+  E  = 101,
+  N  = 35
 )
 
-# The observed-category order is:
-# AE : A : E : Null
+test_F2_AE <- chisq.test(
+  x = F2_AE,
+  p = c(9, 3, 3, 1) / 16
+)
 
-chi_square_test <- function(observed, ratio_text) {
+test_F2_AE
+test_F2_AE$expected
+
+
+# -------------------------
+# 2. F2: EA × EA
+# Observed = 253, 87, 105, 40
+# Expected ratio = 9:3:3:1
+# -------------------------
+
+F2_EA <- c(
+  AE = 253,
+  A  = 87,
+  E  = 105,
+  N  = 40
+)
+
+test_F2_EA <- chisq.test(
+  x = F2_EA,
+  p = c(9, 3, 3, 1) / 16
+)
+
+test_F2_EA
+test_F2_EA$expected
+
+
+# ============================================================
+# Backcrosses
+# For all backcrosses, test only the two expected phenotype classes
+# Expected ratio = 1:1
+# correct = FALSE gives Pearson chi-square without Yates correction
+# ============================================================
+
+
+# -------------------------
+# 3. EE female × AE male
+# AE:E = 54:47
+# -------------------------
+
+BC1 <- c(
+  AE = 54,
+  E  = 47
+)
+
+test_BC1 <- chisq.test(
+  BC1,
+  p = c(0.5, 0.5),
+  correct = FALSE
+)
+
+test_BC1
+
+
+# -------------------------
+# 4. EE female × EA male
+# AE:E = 50:46
+# -------------------------
+
+BC2 <- c(
+  AE = 50,
+  E  = 46
+)
+
+test_BC2 <- chisq.test(
+  BC2,
+  p = c(0.5, 0.5),
+  correct = FALSE
+)
+
+test_BC2
+
+
+# -------------------------
+# 5. EA female × AA male
+# AE:A = 41:59
+# -------------------------
+
+BC3 <- c(
+  AE = 41,
+  A  = 59
+)
+
+test_BC3 <- chisq.test(
+  BC3,
+  p = c(0.5, 0.5),
+  correct = FALSE
+)
+
+test_BC3
+
+
+# -------------------------
+# 6. EA female × EE male
+# AE:E = 58:42
+# -------------------------
+
+BC4 <- c(
+  AE = 58,
+  E  = 42
+)
+
+test_BC4 <- chisq.test(
+  BC4,
+  p = c(0.5, 0.5),
+  correct = FALSE
+)
+
+test_BC4
+
+
+# -------------------------
+# 7. AA female × AE male
+# AE:A = 28:48
+# -------------------------
+
+BC5 <- c(
+  AE = 28,
+  A  = 48
+)
+
+test_BC5 <- chisq.test(
+  BC5,
+  p = c(0.5, 0.5),
+  correct = FALSE
+)
+
+test_BC5
+
+
+# -------------------------
+# 8. AA female × EA male
+# AE:A = 58:52
+# -------------------------
+
+BC6 <- c(
+  AE = 58,
+  A  = 52
+)
+
+test_BC6 <- chisq.test(
+  BC6,
+  p = c(0.5, 0.5),
+  correct = FALSE
+)
+
+test_BC6
+
+
+# -------------------------
+# 9. AE female × AA male
+# AE:A = 56:45
+# -------------------------
+
+BC7 <- c(
+  AE = 56,
+  A  = 45
+)
+
+test_BC7 <- chisq.test(
+  BC7,
+  p = c(0.5, 0.5),
+  correct = FALSE
+)
+
+test_BC7
+
+
+# -------------------------
+# 10. AE female × EE male
+# AE:E = 40:58
+# -------------------------
+
+BC8 <- c(
+  AE = 40,
+  E  = 58
+)
+
+test_BC8 <- chisq.test(
+  BC8,
+  p = c(0.5, 0.5),
+  correct = FALSE
+)
+
+test_BC8
+# ============================================================
+# Summary table
+# ============================================================
+
+get_result <- function(cross, obs, test, expected_ratio) {
   
-  expected_ratio <- as.numeric(
-    strsplit(
-      ratio_text,
-      ":",
-      fixed = TRUE
-    )[[1]]
-  )
-  
-  # Retain only categories with non-zero expected probabilities
-  keep <- expected_ratio > 0
-  
-  observed <- observed[keep]
-  expected_ratio <- expected_ratio[keep]
-  
-  # No valid chi-square test when only one category is expected
-  if (length(observed) < 2) {
-    
-    return(
-      c(
-        Chi_square = NA_real_,
-        df = 0,
-        P_value = NA_real_
-      )
-    )
-  }
-  
-  test_result <- chisq.test(
-    x = observed,
-    p = expected_ratio / sum(expected_ratio)
-  )
-  
-  return(
-    c(
-      Chi_square = unname(
-        test_result$statistic
-      ),
-      df = unname(
-        test_result$parameter
-      ),
-      P_value = test_result$p.value
-    )
+  data.frame(
+    Cross = cross,
+    N = sum(obs),
+    Observed = paste(
+      names(obs),
+      obs,
+      sep = "=",
+      collapse = "; "
+    ),
+    Expected_ratio = expected_ratio,
+    Chi_square = round(as.numeric(test$statistic), 3),
+    df = as.numeric(test$parameter),
+    P_value = signif(test$p.value, 4)
   )
 }
 
-chi_square_results <- t(
-  sapply(
-    seq_len(nrow(segregation_data)),
-    function(i) {
-      
-      observed <- as.numeric(
-        segregation_data[
-          i,
-          c("AE", "A", "E", "Null")
-        ]
-      )
-      
-      chi_square_test(
-        observed,
-        segregation_data$Expected_ratio[i]
-      )
-    }
+
+results <- rbind(
+  
+  get_result(
+    "F2: AE x AE",
+    F2_AE,
+    test_F2_AE,
+    "9:3:3:1"
+  ),
+  
+  get_result(
+    "F2: EA x EA",
+    F2_EA,
+    test_F2_EA,
+    "9:3:3:1"
+  ),
+  
+  get_result(
+    "Backcross: EE x AE",
+    BC1,
+    test_BC1,
+    "1:1"
+  ),
+  
+  get_result(
+    "Backcross: EE x EA",
+    BC2,
+    test_BC2,
+    "1:1"
+  ),
+  
+  get_result(
+    "Backcross: EA x AA",
+    BC3,
+    test_BC3,
+    "1:1"
+  ),
+  
+  get_result(
+    "Backcross: EA x EE",
+    BC4,
+    test_BC4,
+    "1:1"
+  ),
+  
+  get_result(
+    "Backcross: AA x AE",
+    BC5,
+    test_BC5,
+    "1:1"
+  ),
+  
+  get_result(
+    "Backcross: AA x EA",
+    BC6,
+    test_BC6,
+    "1:1"
+  ),
+  
+  get_result(
+    "Backcross: AE x AA",
+    BC7,
+    test_BC7,
+    "1:1"
+  ),
+  
+  get_result(
+    "Backcross: AE x EE",
+    BC8,
+    test_BC8,
+    "1:1"
   )
 )
 
-final_chi_square <- cbind(
-  segregation_data,
-  as.data.frame(chi_square_results)
-)
+print(results)
 
-final_chi_square$Chi_square <- round(
-  final_chi_square$Chi_square,
-  digits = 4
-)
-
-final_chi_square$P_value <- round(
-  final_chi_square$P_value,
-  digits = 4
-)
-
-print(
-  final_chi_square,
-  row.names = FALSE
-)
-
-write.csv(
-  final_chi_square,
-  chi_square_file,
-  row.names = FALSE,
-  fileEncoding = "UTF-8"
-)
-
-cat(
-  "\nChi-square results saved to:\n",
-  chi_square_file,
-  "\n"
-)
